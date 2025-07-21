@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
+
+.font-open-sans {
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Add this to your global CSS or index.css */
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* For the Seasons font, you'll need to import it */
+/* Add the appropriate @font-face for The Seasons font */

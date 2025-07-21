@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.font-open-sans {
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Add this to your global CSS or index.css */
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Remove number input spinners for all browsers */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
