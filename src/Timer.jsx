@@ -11,8 +11,12 @@ function Timer({ duration, onEnd, isDarkMode }) {
 
   const prepTimeoutRef = useRef(null);
 
-  const startSoundRef = useRef(new Audio("/timer-start.mp3"));
-  const doneSoundRef = useRef(new Audio("/timer-done.mp3"));
+  const startSoundRef = useRef(
+    new Audio(`${import.meta.env.BASE_URL}timer-start.mp3`)
+  );
+  const doneSoundRef = useRef(
+    new Audio(`${import.meta.env.BASE_URL}timer-done.mp3`)
+  );
 
   useEffect(() => {
     startSoundRef.current.preload = "auto";
