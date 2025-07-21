@@ -4,25 +4,34 @@ function Timer({ duration, onEnd, isDarkMode }) {
   const [timeLeft, setTimeLeft] = useState(duration);
   const [isRunning, setIsRunning] = useState(false);
   const [isPreparing, setIsPreparing] = useState(true);
+  const [prepCount, setPrepCount] = useState(3);
+
   const [showOverlay, setShowOverlay] = useState(false);
   const intervalRef = useRef(null);
 
-  const beep = new Audio("/beep.mp3");
-  const endBeep = new Audio("/end.mp3");
+  const prepTimeoutRef = useRef(null);
+
+  const startSoundRef = useRef(new Audio("/timer-start.mp3"));
+  const doneSoundRef = useRef(new Audio("/timer-done.mp3"));
+
+  useEffect(() => {
+    startSoundRef.current.preload = "auto";
+    doneSoundRef.current.preload = "auto";
+  }, []);
 
   useEffect(() => {
     setTimeLeft(duration);
     setIsPreparing(true);
+    setPrepCount(3); // ← Reset here
     setShowOverlay(false);
 
-    const prepTimeout = setTimeout(() => {
-      beep.play();
+    prepTimeoutRef.current = setTimeout(() => {
       setIsPreparing(false);
       setIsRunning(true);
     }, 3000);
 
     return () => {
-      clearTimeout(prepTimeout);
+      clearTimeout(prepTimeoutRef);
       clearInterval(intervalRef.current);
     };
   }, [duration]);
@@ -33,7 +42,8 @@ function Timer({ duration, onEnd, isDarkMode }) {
         setTimeLeft((prev) => {
           if (prev <= 1) {
             clearInterval(intervalRef.current);
-            endBeep.play();
+            doneSoundRef.current.play();
+
             setIsRunning(false);
             setShowOverlay(true);
             return 0;
@@ -49,9 +59,9 @@ function Timer({ duration, onEnd, isDarkMode }) {
   const handleOverlayClick = () => {
     setShowOverlay(false);
     setTimeLeft(duration);
+    setPrepCount(3); // ← Reset
     setIsPreparing(true);
     setTimeout(() => {
-      beep.play();
       setIsPreparing(false);
       setIsRunning(true);
     }, 3000);
@@ -59,9 +69,34 @@ function Timer({ duration, onEnd, isDarkMode }) {
 
   const stopTimer = () => {
     clearInterval(intervalRef.current);
+    clearTimeout(prepTimeoutRef.current);
+
+    const startSound = startSoundRef.current;
+    startSound.pause();
+    startSound.currentTime = 0;
+
     setIsRunning(false);
-    onEnd(); // go back to home screen
+    onEnd(); // go back to home
   };
+
+  useEffect(() => {
+    if (isPreparing) {
+      if (prepCount === 3) {
+        startSoundRef.current.play();
+      }
+
+      if (prepCount > 1) {
+        const countdown = setTimeout(() => setPrepCount(prepCount - 1), 1000);
+        return () => clearTimeout(countdown);
+      } else {
+        const finishPrep = setTimeout(() => {
+          setIsPreparing(false);
+          setIsRunning(true);
+        }, 1000);
+        return () => clearTimeout(finishPrep);
+      }
+    }
+  }, [prepCount, isPreparing]);
 
   const formatTime = (totalSeconds) => {
     const minutes = Math.floor(totalSeconds / 60);
@@ -81,7 +116,12 @@ function Timer({ duration, onEnd, isDarkMode }) {
       {/* Timer countdown display */}
       <div className="flex items-center justify-center gap-[4vw] text-[32vw] sm:text-[20vw] font-bold text-ovalBg leading-none">
         {isPreparing ? (
-          <span className="text-[10vw] sm:text-[5vw]">3...2...1</span>
+          <span
+            key={prepCount} // 👈 triggers animation
+            className="animate-scaleIn transition-all duration-500 ease-out"
+          >
+            {prepCount}
+          </span>
         ) : (
           <>
             {String(Math.floor(timeLeft / 60)).padStart(2, "0")}
@@ -112,13 +152,14 @@ function Timer({ duration, onEnd, isDarkMode }) {
             </p>
           </div>
 
-          {/* Button at the bottom, not stretched */}
+          {/* Button*/}
           <button
             onClick={(e) => {
               e.stopPropagation();
               onEnd();
             }}
-            className="mb-4 bg-white text-pink-500 px-6 py-2 rounded-full font-semibold shadow border border-pink-300"
+            className="mb-4 bg-white text-pink-500 px-6 py-2 rounded-full font-semibold shadow
+             border border-pink-300"
           >
             Start New Timer
           </button>
