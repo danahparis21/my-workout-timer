@@ -1,12 +1,58 @@
-# React + Vite
+# My Workout Timer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple, beautiful, and responsive workout timer built with **React + Vite + Tailwind CSS**.
 
-Currently, two official plugins are available:
+Designed to help you stay on track during your fitness routine, with features like a stylish countdown, dark mode, sound effects, and an intuitive interface — all packed into one lightweight app.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🔗 Live Demo
+ [myworkout-timer.netlify.app](https://myworkout-timer.netlify.app/)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## ✨ Features
+
+- Custom countdown timer with animated 3-2-1 intro
+- Light/Dark mode toggle
+- Sound alerts on start and end
+- Fully responsive for mobile and desktop
+- Sleek UI built with TailwindCSS
+- Fast performance via Vite
+
+---
+
+## 📸 Screenshots
+
+| Light Mode                             | Dark Mode                             |
+|----------------------------------------|----------------------------------------|
+| ![Light](./screenshots/light.png)      | ![Dark](./screenshots/dark.png)        |
+
+*(Optional: Add real screenshots from your app for extra polish.)*
+
+---
+
+## Tech Stack
+
+- **React**
+- **Vite**
+- **Tailwind CSS**
+- **Netlify (for deployment)**
+
+---
+
+## Getting Started
+
+
+
+```bash
+git clone https://github.com/danahparis21/my-workout-timer.git
+cd my-workout-timer
+npm install
+npm run dev
+
+---
+
+## Author
+
+Made with love by Danah Paris
