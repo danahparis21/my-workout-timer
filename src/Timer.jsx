@@ -146,7 +146,7 @@ function Timer({ duration, onEnd, isDarkMode }) {
       {/* Overlay when done */}
       {showOverlay && (
         <div
-          className="absolute inset-0 bg-pink-200 bg-opacity-80 flex flex-col justify-between items-center text-center px-4 py-8 z-50"
+          className="fixed inset-0 bg-pink-200 bg-opacity-80 flex flex-col justify-between items-center text-center px-4 py-8 z-50"
           onClick={handleOverlayClick}
         >
           {/* Centered text in the middle */}

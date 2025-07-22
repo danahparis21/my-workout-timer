@@ -26,23 +26,25 @@ function App() {
         isDarkMode ? "bg-[#101125]" : "bg-white"
       } text-center flex flex-col items-center justify-center px-4`}
     >
-      {/* Toggle */}
-      <button
-        onClick={() => setIsDarkMode(!isDarkMode)}
-        className="absolute top-4 left-4 p-2 rounded-full border border-pink-300 text-pink-500 hover:bg-pink-50 transition-all duration-300"
-      >
-        {isDarkMode ? (
-          <SunIcon className="w-5 h-5 text-rosePink" />
-        ) : (
-          <MoonIcon className="w-5 h-5 text-rosePink" />
-        )}
-      </button>
-
       {!timerStarted && (
         <>
-          <h1 className="text-[14px] xs:text-[16px] md:text-[20px] font-poppins text-rosePink px-4 py-1 border border-rosePink rounded-full bg-transparent transition-all duration-300 hover:scale-100 hover:shadow-[0_8px_12px_-2px_#ffd8e5]">
-            My Workout Timer
-          </h1>
+          {/* Title and Toggle Button */}
+
+          <div className="flex items-center gap-2 mb-6">
+            <button
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className="p-2 rounded-full border border-pink-300 text-pink-500 hover:bg-pink-50 transition-all duration-300"
+            >
+              {isDarkMode ? (
+                <SunIcon className="w-5 h-5 text-rosePink" />
+              ) : (
+                <MoonIcon className="w-5 h-5 text-rosePink" />
+              )}
+            </button>
+            <h1 className="text-[14px] xs:text-[16px] md:text-[20px] font-poppins text-pink-500 px-4 py-1 border border-pink-300 rounded-full bg-transparent hover:bg-pink-50 transition-all duration-300">
+              My Workout Timer
+            </h1>
+          </div>
 
           {/* Timer display */}
           <div
@@ -52,7 +54,7 @@ function App() {
             {editing ? (
               <>
                 <input
-                  type="number"
+                  type="tel"
                   value={Math.floor(time / 60)}
                   onChange={(e) => {
                     const minutes = Number(e.target.value);
@@ -65,7 +67,7 @@ function App() {
                 />
                 <span className="text-[32vw] sm:text-[20vw]">:</span>
                 <input
-                  type="number"
+                  type="tel"
                   value={time % 60}
                   onChange={(e) => {
                     const minutes = Math.floor(time / 60);
