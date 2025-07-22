@@ -26,7 +26,7 @@ Designed to help you stay on track during your fitness routine, with features li
 
 | Light Mode                             | Dark Mode                             |
 |----------------------------------------|----------------------------------------|
-| ![Light](./screenshots/light.png)      | ![Dark](./screenshots/dark.png)        |
+| ![Light](./screenshots/lightmode.png)      | ![Dark](./screenshots/darkmode.png)        |
 
 *(Optional: Add real screenshots from your app for extra polish.)*
 
@@ -50,7 +50,7 @@ git clone https://github.com/danahparis21/my-workout-timer.git
 cd my-workout-timer
 npm install
 npm run dev
-
+```
 ---
 
 ## Author
