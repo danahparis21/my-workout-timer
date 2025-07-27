@@ -37,7 +37,7 @@ Designed to help you stay on track during your fitness routine, with features li
 - **React**
 - **Vite**
 - **Tailwind CSS**
-- **Netlify (for deployment)**
+- **Netlify**
 
 ---
 
