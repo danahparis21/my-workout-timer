@@ -34,7 +34,6 @@ function App() {
   const minutesHandlers = useSwipeable({
     onSwipedUp: () => {
       adjustTime('minutes', 1);
-      // Add haptic feedback on mobile if available
       if (navigator.vibrate) navigator.vibrate(10);
     },
     onSwipedDown: () => {
@@ -42,15 +41,13 @@ function App() {
       if (navigator.vibrate) navigator.vibrate(10);
     },
     onSwiping: (event) => {
-      // Visual feedback during swipe
       minutesRef.current.style.transform = `translateY(${event.deltaY * 0.3}px)`;
     },
     onSwiped: () => {
-      // Reset transform after swipe
       minutesRef.current.style.transform = 'translateY(0)';
     },
-    trackMouse: true, // Also works with mouse drag
-    delta: 10, // Minimum distance for a swipe
+    trackMouse: true,
+    delta: 10,
   });
 
   // Swipe handlers for seconds
@@ -82,40 +79,38 @@ function App() {
     setTimerStarted(false);
   };
 
-  // Format time for display
-  const formatTime = (totalSeconds) => {
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-  };
-
   return (
     <div
       className={`min-h-screen ${
         isDarkMode ? "bg-[#101125]" : "bg-white"
-      } text-center flex flex-col items-center justify-center px-4`}
+      } text-center flex flex-col items-center justify-center px-2 sm:px-4`}
+      style={{ minHeight: '400px' }} // Fixed min-height for iframe
     >
       {!timerStarted && (
         <>
-          {/* Title and Toggle Button */}
-          <div className="flex items-center gap-2 mb-6">
+          {/* Title and Toggle Button - Compact for embedding */}
+          <div className="flex items-center gap-1 mb-2 sm:mb-4">
             <button
               onClick={() => setIsDarkMode(!isDarkMode)}
-              className="p-2 rounded-full border border-pink-300 text-pink-500 hover:bg-pink-50 transition-all duration-300"
+              className="p-1 sm:p-2 rounded-full border border-pink-300 text-pink-500 hover:bg-pink-50 transition-all duration-300 text-xs sm:text-base"
+              style={{ fontSize: 'clamp(10px, 2vw, 14px)' }}
             >
               {isDarkMode ? (
-                <SunIcon className="w-5 h-5 text-rosePink" />
+                <SunIcon className="w-3 h-3 sm:w-4 sm:h-4 text-rosePink" />
               ) : (
-                <MoonIcon className="w-5 h-5 text-rosePink" />
+                <MoonIcon className="w-3 h-3 sm:w-4 sm:h-4 text-rosePink" />
               )}
             </button>
-            <h1 className="text-[14px] xs:text-[16px] md:text-[20px] font-poppins text-pink-500 px-4 py-1 border border-pink-300 rounded-full bg-transparent hover:bg-pink-50 transition-all duration-300">
+            <h1 
+              className="font-poppins text-pink-500 px-2 py-0.5 sm:px-3 sm:py-1 border border-pink-300 rounded-full bg-transparent hover:bg-pink-50 transition-all duration-300"
+              style={{ fontSize: 'clamp(10px, 2.5vw, 16px)' }}
+            >
               My Workout Timer
             </h1>
           </div>
 
-          {/* Timer display with swipe */}
-          <div className="flex items-center justify-center gap-[3vw] text-[32vw] sm:text-[20vw] font-bold text-ovalBg w-full max-w-[420px] h-[40vh] sm:h-[60vh] cursor-pointer leading-none">
+          {/* Timer display - Compact for embedding */}
+          <div className="flex items-center justify-center gap-[1vw] sm:gap-[2vw] text-[20vw] sm:text-[16vw] md:text-[14vw] font-bold text-ovalBg w-full max-w-[320px] h-[25vh] sm:h-[35vh] cursor-pointer leading-none">
             {editing ? (
               <>
                 <input
@@ -128,10 +123,11 @@ function App() {
                   }}
                   onBlur={() => setEditing(false)}
                   min={0}
-                  className="w-[3ch] text-center bg-transparent outline-none appearance-none no-spinner text-[32vw] sm:text-[20vw]"
+                  className="w-[2ch] text-center bg-transparent outline-none appearance-none no-spinner"
                   autoFocus
+                  style={{ fontSize: 'inherit' }}
                 />
-                <span className="text-[32vw] sm:text-[20vw]">:</span>
+                <span>:</span>
                 <input
                   type="tel"
                   value={time % 60}
@@ -144,7 +140,8 @@ function App() {
                   onBlur={() => setEditing(false)}
                   min={0}
                   max={59}
-                  className="w-[3ch] text-center bg-transparent outline-none appearance-none no-spinner text-[32vw] sm:text-[20vw]"
+                  className="w-[2ch] text-center bg-transparent outline-none appearance-none no-spinner"
+                  style={{ fontSize: 'inherit' }}
                 />
               </>
             ) : (
@@ -156,25 +153,25 @@ function App() {
                     minutesHandlers.ref(el);
                     minutesRef.current = el;
                   }}
-                  className="relative flex flex-col items-center justify-center w-[3ch] min-h-[1em] touch-manipulation select-none transition-transform duration-150"
+                  className="relative flex flex-col items-center justify-center w-[2ch] min-h-[1em] touch-manipulation select-none transition-transform duration-150"
                   onClick={() => setEditing(true)}
                 >
                   <div className="relative">
                     {String(Math.floor(time / 60)).padStart(2, "0")}
-                    {/* Swipe hint arrows */}
-                    <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center opacity-30">
-                      <svg className="w-4 h-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    {/* Swipe hint arrows - smaller for embedding */}
+                    <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center opacity-20">
+                      <svg className="w-2 h-2 sm:w-3 sm:h-3 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7" />
                       </svg>
-                      <svg className="w-4 h-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-2 h-2 sm:w-3 sm:h-3 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                       </svg>
                     </div>
                   </div>
-                  <div className="text-[3vw] sm:text-[2vw] text-pink-400 mt-2">MIN</div>
+                  <div className="text-[2vw] sm:text-[1.5vw] md:text-[1vw] text-pink-400 mt-1">MIN</div>
                 </div>
 
-                <span className="px-1 text-[32vw] sm:text-[20vw]">:</span>
+                <span className="px-0.5 sm:px-1">:</span>
 
                 {/* Seconds with swipe */}
                 <div
@@ -183,48 +180,51 @@ function App() {
                     secondsHandlers.ref(el);
                     secondsRef.current = el;
                   }}
-                  className="relative flex flex-col items-center justify-center w-[3ch] min-h-[1em] touch-manipulation select-none transition-transform duration-150"
+                  className="relative flex flex-col items-center justify-center w-[2ch] min-h-[1em] touch-manipulation select-none transition-transform duration-150"
                   onClick={() => setEditing(true)}
                 >
                   <div className="relative">
                     {String(time % 60).padStart(2, "0")}
-                    {/* Swipe hint arrows */}
-                    <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center opacity-30">
-                      <svg className="w-4 h-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    {/* Swipe hint arrows - smaller for embedding */}
+                    <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center opacity-20">
+                      <svg className="w-2 h-2 sm:w-3 sm:h-3 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7" />
                       </svg>
-                      <svg className="w-4 h-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-2 h-2 sm:w-3 sm:h-3 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                       </svg>
                     </div>
                   </div>
-                  <div className="text-[3vw] sm:text-[2vw] text-pink-400 mt-2">SEC</div>
+                  <div className="text-[2vw] sm:text-[1.5vw] md:text-[1vw] text-pink-400 mt-1">SEC</div>
                 </div>
               </>
             )}
           </div>
 
-          {/* Instructions */}
-          <div className="text-pink-400 text-sm mt-2 mb-4">
-            {editing ? "Type numbers, tap outside to save" : "Swipe ↑↓ to adjust • Tap to type"}
+          {/* Instructions - smaller for embedding */}
+          <div className="text-pink-400 text-xs sm:text-sm mt-1 mb-2">
+            {editing ? "Type, tap outside" : "Swipe ↑↓ • Tap to type"}
           </div>
 
-          {/* Quick preset buttons (optional but helpful) */}
-          <div className="flex flex-wrap justify-center gap-2 mb-4 max-w-sm">
+          {/* Quick preset buttons - Compact grid */}
+          <div className="grid grid-cols-3 gap-1 sm:gap-1.5 mb-2 sm:mb-3 w-full max-w-[280px]">
             {[30, 60, 90, 120, 180, 300].map((seconds) => (
               <button
                 key={seconds}
                 onClick={() => setTime(seconds)}
-                className="px-3 py-1 border border-pink-300 text-pink-500 rounded-full text-sm hover:bg-pink-50 active:bg-pink-100 transition-all duration-200"
+                className="px-1.5 py-0.5 sm:px-2 sm:py-1 border border-pink-300 text-pink-500 rounded-full hover:bg-pink-50 active:bg-pink-100 transition-all duration-200"
+                style={{ fontSize: 'clamp(10px, 2vw, 12px)' }}
               >
-                {seconds < 60 ? `${seconds}s` : `${seconds/60}m`}
+                {seconds < 60 ? `${seconds}s` : seconds === 60 ? '1m' : seconds === 90 ? '1.5m' : `${seconds/60}m`}
               </button>
             ))}
           </div>
 
+          {/* Start button - Always visible at bottom */}
           <button
             onClick={handleStart}
-            className="mt-2 border border-rosePink text-rosePink text-lg sm:text-xl font-poppins px-5 py-1.5 rounded-full transition-all duration-300 hover:bg-rosePink/10 active:scale-95 active:bg-rosePink/20"
+            className="mt-1 sm:mt-2 border border-rosePink text-rosePink font-poppins px-4 py-1 sm:px-5 sm:py-1.5 rounded-full transition-all duration-300 hover:bg-rosePink/10 active:scale-95 active:bg-rosePink/20"
+            style={{ fontSize: 'clamp(12px, 3vw, 18px)' }}
           >
             Start
           </button>
