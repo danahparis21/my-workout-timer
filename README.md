@@ -28,7 +28,7 @@ Designed to help you stay on track during your fitness routine, with features li
 |----------------------------------------|----------------------------------------|
 | ![Light](./screenshots/lightmode.png)      | ![Dark](./screenshots/darkmode.png)        |
 
-*(Optional: Add real screenshots from your app for extra polish.)*
+
 
 ---
 
@@ -37,7 +37,7 @@ Designed to help you stay on track during your fitness routine, with features li
 - **React**
 - **Vite**
 - **Tailwind CSS**
-- **Netlify (for deployment)**
+- **Netlify**
 
 ---
 
