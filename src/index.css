@@ -1,18 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 .font-open-sans {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 /* Add this to your global CSS or index.css */
 body {
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 /* Remove number input spinners for all browsers */
@@ -22,5 +21,41 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+/* Better touch experience */
+.touch-manipulation {
+  touch-action: manipulation;
+}
 
+/* Prevent text selection on swipe */
+.select-none {
+  user-select: none;
+  -webkit-user-select: none;
+}
 
+/* Smooth transitions */
+.transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Active state for buttons */
+.active\:scale-95:active {
+  transform: scale(0.95);
+}
+
+/* Swipe hint animation */
+@keyframes swipeHint {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translateY(2px);
+  }
+}
+
+.swipe-hint {
+  animation: swipeHint 2s ease-in-out infinite;
+}
